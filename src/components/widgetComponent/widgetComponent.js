@@ -29,6 +29,7 @@ export default class WidgetComponent extends Component {
         if (this.state.isComponentDone) {
         	widgetWrapper = <TextWidget
         		changeWidgetText={this.props.changeWidgetText}
+            widgetData={this.props.widgetData}
 	        	widgetStyle={this.props.widgetStyle}
 	        	widgetText={this.props.widgetText}
 	        	mode={this.props.mode}
