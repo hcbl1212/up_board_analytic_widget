@@ -8,16 +8,14 @@ definejs('GoogleAnalyticsWidget', function create (){
 	      constructor (props){
 					super(props);
 
+
           this.state = {
             ready: false,
 						mode: this.props.mode,
 						isEditing: this.props.mode == 'edit' ? true : false,
 						widgetText: this.props.widgetText,
-            CLIENT_ID: '408434003434-pf5bmmfvag0g4u710i7p5r1bu02rc86j.apps.googleusercontent.com',
-            views: {query: {
-                ids: "ga:139593193"
-              }
-            }
+            ids: "ga:57129211",
+            client_id: '408434003434-pf5bmmfvag0g4u710i7p5r1bu02rc86j.apps.googleusercontent.com'
 					}
           this.widgetStyle = {
 						textAlign : this.props.widgetStyle.textAlign,
@@ -30,52 +28,6 @@ definejs('GoogleAnalyticsWidget', function create (){
 				}
 
         componentWillMount() {
-        (function(w,d,s,g,js,fs){
-  g=w.gapi||(w.gapi={});g.analytics={q:[],ready:function(f){this.q.push(f);}};
-  js=d.createElement(s);fs=d.getElementsByTagName(s)[0];
-  js.src='https://apis.google.com/js/platform.js';
-  fs.parentNode.insertBefore(js,fs);js.onload=function(){g.load('analytics');};
-}(window,document,'script'))
-
-        }
-
-        componentDidMount() {
-          console.log(gapi.analytics)
-          gapi.analytics.ready(function() {
-            gapi.analytics.auth.authorize({
-                container: 'embed-api-auth-container',
-                clientid: this.CLIENT_ID
-            })  
-
-            //var viewSelector = new gapi.analytics.ViewSelector({
-            //  container: 'view-selector-container'
-            //}) 
-          
-            //viewSelector.execute()
-            console.log('here')
-
-            console.log(new gapi.analytics.googleCharts)
-            let dataChart = new gapi.analytics.googleCharts.DataChart({
-              query: {
-                metrics: 'ga:sessions',
-                dimensions: 'ga:date',
-                'start-date': '30daysAgo',
-                'end-date': 'yesterday'
-              },
-              chart: {
-                container: 'chart-container',
-                type: 'LINE',
-                options: {
-                  width: '100%'
-                }
-              }
-            })
-          dataChart.set(this.views).execute();
-          //viewSelector.on('change', function(ids) {
-          //  dataChart.set(this.views).execute();
-          //})
-
-          })
         }
 				componentWillReceiveProps(nextProps) {
 					this.setState({
@@ -83,26 +35,48 @@ definejs('GoogleAnalyticsWidget', function create (){
 					});
 				}
 			  render(){
-          const last7days = {
-            reportType: "ga",
-            query: {
-                dimensions: "ga:date",
-                metrics: "ga:pageviews",
-                "start-date": "7daysAgo",
-                "end-date": "yesterday"
-              },
+        const CLIENT_ID = '408434003434-pf5bmmfvag0g4u710i7p5r1bu02rc86j.apps.googleusercontent.com';
+        const last30days = {
+          reportType: "ga",
+          query: {
+              dimensions: "ga:date",
+              metrics: "ga:pageviews",
+              "start-date": "30daysAgo",
+              "end-date": "yesterday"
+            },
             chart: {
-                type: "LINE"
-              }
+                type: "LINE",
+                options: {
+                      title: "Last 30 days pageviews"
+                }
+            }
           }
 
+        const last7days = {
+          reportType: "ga",
+          query: {
+              dimensions: "ga:date",
+              metrics: "ga:pageviews",
+              "start-date": "7daysAgo",
+              "end-date": "yesterday"
+            },
+          chart: {
+              type: "LINE"
+            }
+        }
+
+        const views = {
+          query: {
+            ids: "ga:57129211"
+          }
+        }
+
   					return(
-						<div className='google-analytics-widget'>
-              <div id="embed-api-auth-container"></div> 
-              <div id="chart-container"></div> 
-              <div id="view-selector-container"></div> 
-						</div>
-					)
+                  <GoogleProvider clientId={CLIENT_ID}>
+                    <GoogleDataChart views={views} config={last30days} />
+                    <GoogleDataChart views={views} config={last7days} />
+                  </GoogleProvider>
+					  )
 				}
 			}
     }
