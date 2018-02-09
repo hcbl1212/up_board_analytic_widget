@@ -29,8 +29,9 @@ export default class WidgetContainer extends Component {
 
 			 <div style={{height:'100%'}}>
                 {this.state.widgets.map((widget, index) => (
-                    <WidgetComponent 
-                        changeWidgetText={this.props.changeWidgetText}                     
+                    <WidgetComponent
+                        key={index}
+                        changeWidgetText={this.props.changeWidgetText}
                         widgetData={widget}
                         widgetName={widget.widgetClassName}
                         widgetText={widget.textForWidget}

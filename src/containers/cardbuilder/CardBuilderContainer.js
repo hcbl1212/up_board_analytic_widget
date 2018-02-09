@@ -118,11 +118,11 @@ export default class CardBuilderContainer extends Component {
                         mode={'edit'}
                       />
                    </div>
-                   </div></div></div><div className="hint-text">Edit mode</div></div><div className="card-summary__wrapper"><section className="card-summary"><header className="card-summary__header"><img alt="preview" src="../../dist/images/icons/ic_doublearrow.svg"/></header><div className="card-summary__content"><p className="card-name placeholder">Card name</p><img alt="preview" src="../../dist/images/icons/ic_more_gray.svg"/></div>
+                   </div></div></div><div className="hint-text">Edit mode</div></div><div className="card-summary__wrapper"><section className="card-summary"><header className="card-summary__header"><img alt="preview" src="../../dist/images/icons/ic_arrow_dr.svg"/></header><div className="card-summary__content"><p className="card-name placeholder">Card name</p><img alt="preview" src="../../dist/images/icons/ic_arrow_dr.svg"/></div>
                     <WidgetContainer
                         changeWidgetText={this.changeWidgetText.bind(this)}
                         widgets={this.state.widgetList}
-                        mode={'preview'}
+                        mode={'edit'}
                     />
                    </section><div className="hint-text">Preview Mode</div></div></section></div>
                    <button className="popupOpen" onClick={this.showDetailedView.bind(this)}>Show detauled view</button>
